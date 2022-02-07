@@ -2,7 +2,11 @@ package com.example.android_project_v1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -29,6 +33,21 @@ public class LessonListActivity extends AppCompatActivity {
                 new Lesson("Variables and conditionals", 80, false),
                 new Lesson("Loops", 38, false)
         };
+
+        lessonListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // send info to new activity (LessonDetailActivity)
+
+                Intent intent = new Intent(LessonListActivity.this, LessonDetailActivity.class);
+
+                intent.putExtra("LessonName", lessons[i].name);
+                intent.putExtra("LessonLength", lessons[i].length);
+                intent.putExtra("LessonCompleted", lessons[i].isCompleted);
+
+                startActivity(intent);
+            }
+        });
 
         ArrayAdapter<Lesson> lessonArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lessons);
         lessonListView.setAdapter(lessonArrayAdapter);

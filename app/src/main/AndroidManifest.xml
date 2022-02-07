@@ -11,7 +11,9 @@
         android:theme="@style/Theme.Android_Project_v1">
         <activity
             android:name=".LessonDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".LessonListActivity"
+            android:label="Lesson Detail"/>
         <activity
             android:name=".LessonListActivity"
             android:exported="false"
