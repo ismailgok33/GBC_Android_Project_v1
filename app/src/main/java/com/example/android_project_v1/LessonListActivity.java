@@ -43,6 +43,8 @@ public class LessonListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 // send info to new activity (LessonDetailActivity)
 
+                Log.d("xDEBUG", "i: " + i);
+                Log.d("xDEBUG", "lessons[i].lessonNumber: " + lessons[i].lessonNumber);
                 Intent intent = new Intent(LessonListActivity.this, LessonDetailActivity.class);
 
                 intent.putExtra("lessonNumber", lessons[i].lessonNumber);
