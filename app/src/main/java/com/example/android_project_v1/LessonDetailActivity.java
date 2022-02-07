@@ -4,12 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class LessonDetailActivity extends AppCompatActivity {
 
     TextView lessonDetailTextView;
     TextView lessonLengthTextView;
+    Button completeLessonButton;
+    Lesson lesson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,23 +21,36 @@ public class LessonDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lesson_detail);
 
         configure();
+
+
+    }
+
+    private void completeLesson() {
+        lesson.isCompleted = true;
     }
 
     private void configure() {
         lessonDetailTextView = findViewById(R.id.textview_lesson_detail);
         lessonLengthTextView = findViewById(R.id.textview_lesson_length);
+        completeLessonButton = findViewById(R.id.button_mark_complete);
 
-        Lesson lesson = getLessonInfo();
+        lesson = getLessonInfo();
+
         lessonDetailTextView.setText(lesson.name);
         lessonLengthTextView.setText(lesson.lengthConverter(lesson.length));
 
+        completeLessonButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                completeLesson();
+                finish();
+            }
+        });
     }
 
     private Lesson getLessonInfo() {
-        String name = getIntent().getStringExtra("LessonName");
-        int length = getIntent().getIntExtra("LessonLength", 0);
-        boolean isCompleted = getIntent().getBooleanExtra("lessonCompleted", false);
-
-        return new Lesson(name, length, isCompleted);
+        int lessonNumber = getIntent().getIntExtra("LessonNumber", 0);
+        int index = lessonNumber--;
+        return Lesson.getInstance(index);
     }
 }

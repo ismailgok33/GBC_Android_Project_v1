@@ -1,5 +1,6 @@
 package com.example.android_project_v1;
 
+import androidx.annotation.LongDef;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -15,6 +16,8 @@ import org.w3c.dom.ls.LSException;
 public class LessonListActivity extends AppCompatActivity {
 
     ListView lessonListView;
+    Lesson[] lessons;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,15 +27,16 @@ public class LessonListActivity extends AppCompatActivity {
         configure();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("xDEBUG", "onResume: lessons[0].isCompleted = " + lessons[0].isCompleted);
+    }
+
     private void configure() {
         lessonListView = findViewById(R.id.listview_lesson_list);
 
-        Lesson[] lessons = {
-                new Lesson("Introduction to the course", 12, false),
-                new Lesson("What is Javascript", 30, false),
-                new Lesson("Variables and conditionals", 80, false),
-                new Lesson("Loops", 38, false)
-        };
+        lessons = Lesson.getInstances();
 
         lessonListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -41,15 +45,14 @@ public class LessonListActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(LessonListActivity.this, LessonDetailActivity.class);
 
-                intent.putExtra("LessonName", lessons[i].name);
-                intent.putExtra("LessonLength", lessons[i].length);
-                intent.putExtra("LessonCompleted", lessons[i].isCompleted);
+                intent.putExtra("lessonNumber", lessons[i].lessonNumber);
 
                 startActivity(intent);
             }
         });
 
         ArrayAdapter<Lesson> lessonArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lessons);
+        lessonArrayAdapter.notifyDataSetChanged();
         lessonListView.setAdapter(lessonArrayAdapter);
     }
 }

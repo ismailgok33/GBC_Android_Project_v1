@@ -10,6 +10,7 @@
         android:layout_centerHorizontal="true"
         android:text="Force sequential progress?" />
 
+
     <ListView
         android:id="@+id/listview_lesson_list"
         android:layout_width="match_parent"

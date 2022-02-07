@@ -42,7 +42,7 @@
     <EditText
         android:id="@+id/edittext_take_notes"
         android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_height="200dp"
         android:layout_below="@id/textview_take_notes"
         android:layout_centerHorizontal="true"
         android:gravity="start"
